@@ -626,7 +626,7 @@ fun AboutScreen(modifier: Modifier = Modifier) {
         // —— 本版生成方式声明 ——
         AboutCard("本版生成方式", null) {
             Text(
-                "本版（3.2.2）的安卓工程改造、原生 Compose 界面、打包与说明文档，" +
+                "本版（3.2.3）的安卓工程改造、原生 Compose 界面、打包与说明文档，" +
                     "由 AI（DeepSeek Harness 智能体）在用户要求下生成与修改。" +
                     "下载与解析内核（Rust 源码与二进制）完全来自上游开源项目，未做任何改动。",
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 19.sp

@@ -3,6 +3,7 @@ package com.tomato.downloader.ui
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -153,6 +154,7 @@ fun MoreScreen(
             if (lanUrl.isNotBlank()) {
                 KeyValueRow("局域网", lanUrl)
             }
+            KeyValueRow("源码", "BlueBigFish001/webForTomatoFix")
             val le = loadError
             if (le != null) {
                 Spacer(Modifier.height(6.dp))
@@ -245,6 +247,12 @@ fun MoreScreen(
         NativeCard {
             Text("功能入口", color = Color(0xFFE6EDF3), fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(4.dp))
+            // 本版源码仓库：点一下用浏览器打开
+            EntryRow(
+                Icons.Outlined.OpenInBrowser,
+                "本版源码仓库",
+                "github.com/BlueBigFish001/webForTomatoFix"
+            ) { openRepo(context) }
             EntryRow(Icons.Outlined.History, "下载历史", "查看每本书下载了多少章") { onOpenSub(SubPage.History) }
             EntryRow(Icons.Outlined.Sync, "追更扫描", "扫描书库里的书有没有新章节") { onOpenSub(SubPage.Updates) }
             EntryRow(Icons.Outlined.Code, "内核日志", "启动 / 停止服务，查看运行日志") { onOpenSub(SubPage.Terminal) }
@@ -273,6 +281,16 @@ private fun EntryRow(
             Text(subtitle, color = Color(0xFF6B7280), fontSize = 10.5.sp)
         }
         Text("›", color = Color(0xFF6B7280), fontSize = 16.sp)
+    }
+}
+
+private const val REPO_URL = "https://github.com/BlueBigFish001/webForTomatoFix"
+
+private fun openRepo(context: Context) {
+    runCatching {
+        context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(REPO_URL)))
+    }.onFailure {
+        Toast.makeText(context, "没有可打开的浏览器", Toast.LENGTH_SHORT).show()
     }
 }
 
