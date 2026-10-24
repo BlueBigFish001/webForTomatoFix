@@ -1,0 +1,18 @@
+# 行尾策略：仓库统一按平台默认处理，脚本显式钉住
+* text=auto
+
+*.sh   text eol=lf
+*.bat  text eol=crlf
+*.ps1  text eol=crlf
+
+# 二进制文件：绝不参与行尾转换
+*.apk  binary
+*.jar  binary
+*.png  binary
+*.ico  binary
+*.jpg  binary
+*.jpeg binary
+*.zip  binary
+
+# 内置下载内核（无扩展名的 Android ELF 可执行文件，约 15MB）
+Tomato-Novel-Downloader-main/Android/TomatoWeb/app/src/main/assets/tomato/TomatoNovelDownloader-Android_* binary

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 下载内核只在本机 127.0.0.1 上提供 HTTP 服务，内嵌 WebView 需要允许明文访问本机地址。
+     这里直接放开明文：App 内置页面只加载 127.0.0.1，站外链接一律交给系统浏览器打开，
+     不会把 App 变成不设防的 HTTP 客户端。 -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

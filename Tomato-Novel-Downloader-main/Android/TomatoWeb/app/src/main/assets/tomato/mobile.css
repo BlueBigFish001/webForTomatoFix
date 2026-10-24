@@ -1,0 +1,185 @@
+/* ============================================================
+   Web For Tomato · 手机端适配样式（由 App 的 WebView 注入）
+   ------------------------------------------------------------
+   为什么用注入而不是改模板：上游 HTML/CSS 是编译进 Rust 内核
+   二进制的（include_str!），改模板必须重编内核才能生效；
+   注入 CSS 只改 App 内呈现，不碰内核，内核升级也不受影响。
+   仅在窄屏（<=768px）生效，平板 / 电脑浏览器看到的仍是原版。
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* ---------- 1. 侧边栏 → 顶部两行导航（全部可见，不用横滑） ---------- */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    overflow: visible;
+    z-index: 90;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  }
+
+  .sidebar .brand { display: none; }
+
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px 46px 6px 6px; /* 右侧给主题按钮留位 */
+  }
+
+  .nav a {
+    flex: 1 0 calc(25% - 4px);
+    flex-direction: column;
+    gap: 2px;
+    padding: 5px 4px;
+    font-size: 10.5px;
+    line-height: 1.15;
+    border-radius: 9px;
+    justify-content: center;
+    text-align: center;
+    min-height: 42px;
+  }
+
+  .nav a svg { width: 16px; height: 16px; }
+
+  /* 主题按钮浮在导航右上角 */
+  .sidebar-footer {
+    position: fixed;
+    top: 7px;
+    right: 7px;
+    padding: 0;
+    border: none;
+    z-index: 95;
+  }
+  .sidebar-footer .free-notice { display: none; }
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--btn-default-bg);
+  }
+  .theme-toggle span { display: none; }
+
+  /* ---------- 2. 内容区 ---------- */
+  body { flex-direction: column; }
+
+  .main-content {
+    margin-left: 0;
+    padding: 12px 12px 18px;
+    max-width: none;
+    min-height: auto;
+  }
+
+  h2 { font-size: 1.15rem; margin-bottom: 12px; }
+  h3 { font-size: 1rem; }
+
+  .card {
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+
+  .row { gap: 8px; margin-bottom: 10px; }
+  .row .k { min-width: 0; }
+  .row code { max-width: 100%; word-break: break-all; }
+
+  /* ---------- 3. 表单控件：全宽 + 触摸友好 ---------- */
+  input[type="text"],
+  input[type="password"],
+  input[type="number"],
+  select,
+  textarea {
+    max-width: none;
+    width: 100%;
+    font-size: 15px;
+    padding: 11px 12px;
+    min-height: 44px;
+  }
+
+  button { min-height: 40px; padding: 9px 16px; font-size: 14px; }
+  button.sm { min-height: 34px; padding: 6px 12px; font-size: 13px; }
+  input[type="checkbox"] { width: 22px; height: 22px; }
+
+  .form-inline-stretch {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .form-inline-stretch button { width: 100%; }
+
+  /* ---------- 4. 配置页 ---------- */
+  .config-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .config-tab { white-space: nowrap; }
+
+  /* ---------- 5. 表格：默认横滚；JS 打标后变卡片 ---------- */
+  .table-wrap { -webkit-overflow-scrolling: touch; }
+  .table { font-size: 13px; }
+  .table th { padding: 9px 10px; }
+  .table td { padding: 9px 10px; }
+
+  /* 卡片模式（由 mobile.js 给表格加 .tomato-cards） */
+  .table.tomato-cards { display: block; width: 100%; }
+  .table.tomato-cards thead { display: none; }
+  .table.tomato-cards tbody { display: block; }
+  .table.tomato-cards tr {
+    display: block;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .table.tomato-cards tr:last-child { border-bottom: none; }
+  .table.tomato-cards td {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 3px 0;
+    border: none;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .table.tomato-cards td::before {
+    content: attr(data-label);
+    flex: 0 0 60px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .table.tomato-cards .empty-row td {
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .table.tomato-cards .empty-row td::before { content: none; }
+
+  /* ---------- 6. 杂项 ---------- */
+  /* App 内不需要侧边栏 / 状态页里的「免费声明」广告位 */
+  .free-notice,
+  .free-notice-mobile { display: none; }
+
+  code { word-break: break-all; }
+  .progressTrack { height: 8px; }
+  .previewCover { width: 84px; height: 112px; }
+
+  /* 手机上去掉切页淡入动画：省电、减少重绘抖动 */
+  .section.active { animation: none; }
+}
+
+/* ============================================================
+   手机横屏（宽 >768 但很矮）：侧边栏与内容都压缩，避免挤爆
+   ============================================================ */
+@media (min-width: 769px) and (max-height: 520px) {
+  .brand { padding: 10px 14px; font-size: 1rem; }
+  .nav { padding: 8px 6px; }
+  .nav a { padding: 6px 12px; font-size: 0.85rem; }
+  .main-content { padding: 16px 20px; }
+  .card { padding: 14px 16px; margin-bottom: 14px; }
+  h2 { font-size: 1.15rem; margin-bottom: 12px; }
+}
