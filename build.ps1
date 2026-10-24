@@ -37,7 +37,7 @@ if ($LASTEXITCODE -ne 0) { throw "构建失败" }
 
 if (-not (Test-Path $apk)) { throw "未生成 APK：$apk" }
 New-Item -ItemType Directory -Force -Path $dist | Out-Null
-$out = Join-Path $dist 'WebForTomato-3.2.3.apk'
+$out = Join-Path $dist 'WebForTomato-3.2.4.apk'
 Copy-Item $apk $out -Force
 "APK: $out ({0:N1} MB)" -f ((Get-Item $out).Length / 1MB)
 

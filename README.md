@@ -1,4 +1,4 @@
-# Web For Tomato 3.2.3 —— 界面原生的番茄小说下载器
+# Web For Tomato 3.2.4 —— 界面原生的番茄小说下载器
 
 把 [zhongbai2333/Tomato-Novel-Downloader](https://github.com/zhongbai2333/Tomato-Novel-Downloader) 的下载内核装进安卓应用，
 **界面全部用 Compose 原生写**：搜索、任务、书库、配置都在 App 里点，不加载网页，也不用手动下载内核二进制。
@@ -7,7 +7,7 @@
 - 界面：Android + Kotlin + Jetpack Compose（原生组件，非 WebView）
 - 界面语言：中文
 
-> **生成方式声明**：本版（3.2.3）的安卓工程改造、原生界面、打包与文档，由 **AI（DeepSeek Harness 智能体）**
+> **生成方式声明**：本版（3.2.4）的安卓工程改造、原生界面、打包与文档，由 **AI（DeepSeek Harness 智能体）**
 > 在用户要求下生成与修改。下载与解析内核完全来自下面的上游开源项目，未做任何改动。
 
 ## 零、本版源码仓库
@@ -33,13 +33,13 @@ MIT 许可要求保留原版权声明与许可文本；本应用分发时需一�
 
 ## 一、与原版客户端（2.1.8）的差别
 
-| 环节 | 原版 2.1.8 | 本版 3.2.3 |
+| 环节 | 原版 2.1.8 | 本版 3.2.4 |
 |---|---|---|
 | 下载内核 | 点「获取 Web」→ 联网从 GitHub Release 下 8.6MB 二进制 | **APK 内置** arm64 + arm32，首次启动释放到可执行目录，**离线可用**；可在「更多 → 内核日志」里手动联网更新 |
 | 操作界面 | 服务起来后用**系统浏览器**打开网页 | **原生 Compose 界面**：搜书 / 任务 / 书库 / 更多四个页签，直接调内核的本地 HTTP 接口 |
 | 导出 | 由浏览器决定落点 | **应用内复制**：书库页一键把 .epub/.txt 写入 `Download/Tomato/` |
 | 书库 | 只能一本本「复制到…」 | 书库页可浏览目录、导出、删除；「关于」页还能一键全部导出 |
-| 手机布局 | — | 3.1.0 起对网页做了手机适配；3.2.3 起**原生界面本身就是按手机设计的** |
+| 手机布局 | — | 3.1.0 起对网页做了手机适配；3.2.4 起**原生界面本身就是按手机设计的** |
 | 输入法 | — | 修复了键盘弹出时界面被「黑色遮罩」压塌的问题 |
 
 ---
@@ -98,7 +98,7 @@ Compose 界面  ──HTTP/JSON──▶  127.0.0.1:18423（内置内核，前�
 
 ### 2）界面依赖网页
 
-3.1.0 还是 WebView + 注入 CSS 的手机版网页。3.2.3 把这些页面全部换成 Compose 原生实现：
+3.1.0 还是 WebView + 注入 CSS 的手机版网页。3.2.4 把这些页面全部换成 Compose 原生实现：
 
 - 列表用 `LazyColumn`，进度用 `LinearProgressIndicator`，弹窗用 `AlertDialog`
 - 数据来自内核自带的 JSON API，字段与 `src/ui/web/routes/*.rs` 一一对应
@@ -113,7 +113,7 @@ tomato-app/
 ├── README.md
 ├── build.ps1                         # 一键构建（Windows）
 ├── dist/                             # 构建产物（.gitignore 排除，本地生成）
-│   └── WebForTomato-3.2.3.apk
+│   └── WebForTomato-3.2.4.apk
 ├── screenshots/
 ├── release.jks                       # 自签名密钥（口令 Tomato2024!，别名 tomato）
 └── Tomato-Novel-Downloader-main/

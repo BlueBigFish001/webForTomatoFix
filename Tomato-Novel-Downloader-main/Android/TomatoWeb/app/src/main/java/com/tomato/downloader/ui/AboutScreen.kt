@@ -79,30 +79,6 @@ import com.tomato.downloader.ui.theme.Green
 import com.tomato.downloader.ui.theme.TerminalBg
 import com.tomato.downloader.ui.theme.TerminalBorder
 
-private const val AUTHOR_QQ = "898954782"
-
-private fun openQQProfile(context: android.content.Context) {
-    try {
-        // 优先跳转 QQ 个人资料卡
-        val profileUri = Uri.parse("mqqapi://card/show_pslcard?src_type=internal&version=1&uin=$AUTHOR_QQ&card_type=person&source=qrcode")
-        context.startActivity(Intent(Intent.ACTION_VIEW, profileUri))
-    } catch (e: Exception) {
-        try {
-            // 备用：跳转到 QQ 临时会话
-            val chatUri = Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=$AUTHOR_QQ")
-            context.startActivity(Intent(Intent.ACTION_VIEW, chatUri))
-        } catch (e2: Exception) {
-            try {
-                // 最终备用：浏览器打开 QQ 空间主页
-                val webUri = Uri.parse("https://user.qzone.qq.com/$AUTHOR_QQ")
-                context.startActivity(Intent(Intent.ACTION_VIEW, webUri))
-            } catch (e3: Exception) {
-                Toast.makeText(context, "无法打开 QQ，请手动添加 QQ：$AUTHOR_QQ", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-}
-
 @Composable
 fun AboutScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -626,7 +602,7 @@ fun AboutScreen(modifier: Modifier = Modifier) {
         // —— 本版生成方式声明 ——
         AboutCard("本版生成方式", null) {
             Text(
-                "本版（3.2.3）的安卓工程改造、原生 Compose 界面、打包与说明文档，" +
+                "本版（3.2.4）的安卓工程改造、原生 Compose 界面、打包与说明文档，" +
                     "由 AI（DeepSeek Harness 智能体）在用户要求下生成与修改。" +
                     "下载与解析内核（Rust 源码与二进制）完全来自上游开源项目，未做任何改动。",
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 19.sp
@@ -639,35 +615,26 @@ fun AboutScreen(modifier: Modifier = Modifier) {
         }
 
         LinkCard("参考项目", "Tomato-Novel-Downloader", "https://github.com/zhongbai2333/Tomato-Novel-Downloader")
-        AboutCard("作者", null) {
-            Text(
-                "林九思",
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                modifier = Modifier.clickable { openQQProfile(context) }
-            )
-            Text(
-                "点击跳转 QQ 主页 · QQ：$AUTHOR_QQ",
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 11.sp,
-                modifier = Modifier.padding(top = 2.dp)
-            )
-        }
         AboutCard("使用与免责声明", null) {
             Text(
-                "本程序仅供网络爬虫技术、网页数据处理及相关研究的学习用途，以及个人阅读备份。",
+                "本程序仅供网络爬虫技术、网页数据处理及相关研究的学习用途，以及个人合法拥有内容的阅读备份。",
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 19.sp
             )
             Text(
-                "请勿用于任何违反法律法规或侵犯他人权益的活动；下载内容仅供自行阅读，" +
+                "请勿用于任何违反法律法规或侵犯他人权益的活动。下载内容仅供自行阅读，" +
                     "不得传播、转载或用于商业用途；请勿把本程序用于批量滥用。",
                 color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 19.sp,
                 modifier = Modifier.padding(top = 4.dp)
             )
             Text(
-                "使用本程序产生的任何后果由使用者自行承担，作者与贡献者不承担任何责任。" +
-                    "如有侵权，请联系 QQ$AUTHOR_QQ。",
+                "本程序按「原样」提供，不附带任何明示或默示担保。使用本程序产生的任何后果由使用者自行承担，" +
+                    "作者、贡献者与分发者不承担任何法律责任。",
+                color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, lineHeight = 19.sp,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Text(
+                "本程序不存储、不传播任何作品内容，全部内容由下载客户端从第三方接口获取。" +
+                    "若权利人认为本程序或其输出侵犯了您的合法权益，请通过源码仓库的 Issues 提交说明，我们会尽快处理。",
                 color = Color(0xFF8B949E), fontSize = 11.sp, lineHeight = 17.sp,
                 modifier = Modifier.padding(top = 4.dp)
             )
