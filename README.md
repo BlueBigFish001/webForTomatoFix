@@ -47,7 +47,8 @@ MIT 许可要求保留原版权声明与许可文本；本应用分发时需一�
 ## 二、安装
 
 - 支持 Android 6.0（API 23）～ Android 15
-- 直接安装 `dist/WebForTomato-3.2.2.apk`（自签名包）
+- 安装包：运行 `build.ps1` 本地构建（产物在 `dist/`），或从本仓库 **Releases** 下载；仓库不提交 APK
+  （`.gitignore` 已排除 `dist/`，二进制产物走 Release 更规范）
 - 安装时系统可能提示「此应用专为旧版 Android 构建」，选择**继续安装**
 
 > `targetSdk = 28` 是刻意保留的：Android 10 起 `filesDir` 被施加 W^X（noexec）保护，
@@ -111,8 +112,8 @@ Compose 界面  ──HTTP/JSON──▶  127.0.0.1:18423（内置内核，前�
 tomato-app/
 ├── README.md
 ├── build.ps1                         # 一键构建（Windows）
-├── dist/
-│   └── WebForTomato-3.2.2.apk        # 可直接安装
+├── dist/                             # 构建产物（.gitignore 排除，本地生成）
+│   └── WebForTomato-3.2.2.apk
 ├── screenshots/
 ├── release.jks                       # 自签名密钥（口令 Tomato2024!，别名 tomato）
 └── Tomato-Novel-Downloader-main/
